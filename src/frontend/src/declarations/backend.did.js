@@ -33,10 +33,10 @@ export const FoodItem = IDL.Record({
   'id' : IDL.Nat,
   'categories' : IDL.Vec(Category),
   'name' : IDL.Text,
+  'isAvailable' : IDL.Bool,
   'description' : IDL.Text,
-  'preparationTime' : IDL.Nat,
-  'available' : IDL.Bool,
   'imageUrl' : IDL.Text,
+  'prepTime' : IDL.Nat,
   'price' : IDL.Float64,
 });
 export const UserRole = IDL.Variant({
@@ -96,6 +96,7 @@ export const idlService = IDL.Service({
   'assignCallerUserRole' : IDL.Func([IDL.Principal, UserRole], [], []),
   'calculateCartTotal' : IDL.Func([], [IDL.Float64], ['query']),
   'deleteFoodItem' : IDL.Func([IDL.Nat], [], []),
+  'getAllFoodItems' : IDL.Func([], [IDL.Vec(FoodItem)], ['query']),
   'getAllOrdersByTotalPriceDesc' : IDL.Func(
       [],
       [IDL.Vec(OrderRecord)],
@@ -104,7 +105,6 @@ export const idlService = IDL.Service({
   'getCallerUserProfile' : IDL.Func([], [IDL.Opt(UserProfile)], ['query']),
   'getCallerUserRole' : IDL.Func([], [UserRole], ['query']),
   'getCart' : IDL.Func([], [IDL.Vec(CartItem)], ['query']),
-  'getFoodItems' : IDL.Func([], [IDL.Vec(FoodItem)], ['query']),
   'getFoodItemsByCategory' : IDL.Func(
       [Category],
       [IDL.Vec(FoodItem)],
@@ -153,10 +153,10 @@ export const idlFactory = ({ IDL }) => {
     'id' : IDL.Nat,
     'categories' : IDL.Vec(Category),
     'name' : IDL.Text,
+    'isAvailable' : IDL.Bool,
     'description' : IDL.Text,
-    'preparationTime' : IDL.Nat,
-    'available' : IDL.Bool,
     'imageUrl' : IDL.Text,
+    'prepTime' : IDL.Nat,
     'price' : IDL.Float64,
   });
   const UserRole = IDL.Variant({
@@ -213,6 +213,7 @@ export const idlFactory = ({ IDL }) => {
     'assignCallerUserRole' : IDL.Func([IDL.Principal, UserRole], [], []),
     'calculateCartTotal' : IDL.Func([], [IDL.Float64], ['query']),
     'deleteFoodItem' : IDL.Func([IDL.Nat], [], []),
+    'getAllFoodItems' : IDL.Func([], [IDL.Vec(FoodItem)], ['query']),
     'getAllOrdersByTotalPriceDesc' : IDL.Func(
         [],
         [IDL.Vec(OrderRecord)],
@@ -221,7 +222,6 @@ export const idlFactory = ({ IDL }) => {
     'getCallerUserProfile' : IDL.Func([], [IDL.Opt(UserProfile)], ['query']),
     'getCallerUserRole' : IDL.Func([], [UserRole], ['query']),
     'getCart' : IDL.Func([], [IDL.Vec(CartItem)], ['query']),
-    'getFoodItems' : IDL.Func([], [IDL.Vec(FoodItem)], ['query']),
     'getFoodItemsByCategory' : IDL.Func(
         [Category],
         [IDL.Vec(FoodItem)],

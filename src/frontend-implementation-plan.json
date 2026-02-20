@@ -1,6 +1,78 @@
 {
   "kind": "implementation_plan",
   "version": "1.0",
-  "title": "Add five initial food items to database",
-  "requirements": []
+  "title": "Fix food items not displaying on frontend",
+  "requirements": [
+    {
+      "id": "REQ-17",
+      "summary": "Debug and fix the food items query in the ProductsPage component to ensure the five seeded food items are retrieved from the backend and displayed in the product grid",
+      "acceptanceCriteria": [
+        "All five seeded food items appear in the product grid on the ProductsPage",
+        "Each item displays its name, image, price, categories, and add-to-cart button",
+        "Category filtering works correctly to show/hide items based on selected category",
+        "No console errors related to data fetching appear in browser developer tools"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/pages/ProductsPage.tsx",
+          "operation": "modify",
+          "description": "Debug the useGetAllFoodItems hook invocation to ensure it correctly fetches data from the backend. Verify the query is enabled when the actor is available and that loading/error states are properly handled. Add console logging to trace data flow from backend response through the component state. Ensure the filtered items array correctly processes the backend data and maps it to ProductCard components. Verify the component properly displays all five seeded food items with their images from frontend/public/assets/generated/<filename>.dim_400x300.png paths."
+        },
+        {
+          "path": "frontend/src/hooks/useQueries.ts",
+          "operation": "modify",
+          "description": "Debug the useGetAllFoodItems query hook to ensure it correctly calls actor.getAllFoodItems() and properly handles the response. Verify the query is enabled only when the actor is available and not fetching. Add error handling for malformed responses and ensure the query key is consistent. Check that query invalidation after cart operations (addToCart, updateCartItem, removeFromCart) properly triggers refetch of food items. Add console logging to trace the backend response structure and confirm it matches the FoodItem type expectations."
+        }
+      ]
+    },
+    {
+      "id": "REQ-18",
+      "summary": "Verify the useQueries hook's getAllFoodItems query is correctly configured to fetch data from the backend actor and handle loading/error states appropriately",
+      "acceptanceCriteria": [
+        "The getAllFoodItems query successfully calls the backend actor method",
+        "Loading state is displayed while fetching data",
+        "Error states are properly handled and displayed to the user",
+        "Query invalidation works correctly after cart operations"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/hooks/useQueries.ts",
+          "operation": "modify",
+          "description": "Review and fix the useGetAllFoodItems hook configuration. Ensure the queryKey is unique and stable. Verify the enabled condition properly checks for actor availability and actorFetching state. Ensure the queryFn correctly awaits actor.getAllFoodItems() and handles any transformation needed. Add proper error handling with retry configuration. Verify that mutations (useAddToCart, useUpdateCartItem, useRemoveFromCart) include 'foodItems' in their onSuccess invalidation arrays to trigger refetch after cart changes."
+        },
+        {
+          "path": "frontend/src/pages/ProductsPage.tsx",
+          "operation": "modify",
+          "description": "Enhance loading and error state handling in ProductsPage. Display a loading skeleton or spinner while foodItems data is fetching. Show user-friendly error messages if the query fails, with a retry button. Ensure the component properly derives isLoading from both actorFetching and query.isLoading states to prevent premature rendering. Add null/undefined checks before filtering and mapping foodItems to ProductCard components."
+        }
+      ]
+    },
+    {
+      "id": "REQ-19",
+      "summary": "Check the InitializeData component execution to confirm that all five food items are successfully seeded on admin login and verify no duplicate prevention logic is blocking legitimate items",
+      "acceptanceCriteria": [
+        "InitializeData component runs on admin login",
+        "All five food items are created in the backend without errors",
+        "Duplicate check correctly identifies existing items by name",
+        "Success/failure states are logged for debugging"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/InitializeData.tsx",
+          "operation": "modify",
+          "description": "Debug the InitializeData component to ensure it runs on admin login when isAdmin is true. Verify the useEffect dependency array includes isAdmin and actor. Check that the duplicate prevention logic (filtering existing items by name) correctly compares item names and doesn't accidentally block all items. Add detailed console logging for each step: when the component runs, which items already exist, which items are being added, and the results of each addFoodItem call. Ensure the five seeded items (Chicken Biryani, Paneer Tikka, Aloo Paratha, Matar Paneer, Matar Paneer Roti) use the correct image paths from frontend/public/assets/generated/ with .dim_400x300.png dimensions. Add error handling to log failures without breaking the initialization flow."
+        },
+        {
+          "path": "frontend/src/hooks/useQueries.ts",
+          "operation": "modify",
+          "description": "Ensure the useAddFoodItem mutation properly invalidates the 'foodItems' query on success so that newly seeded items appear immediately. Verify the mutation calls actor.addFoodItem with the correct FoodItem structure including all required fields (id, name, description, price, categories, imageUrl, isAvailable, prepTime). Add success/error callbacks that log the mutation results for debugging."
+        },
+        {
+          "path": "frontend/src/components/Layout.tsx",
+          "operation": "modify",
+          "description": "Verify the Layout component renders the InitializeData component and that it's positioned where it can execute during the admin session. Ensure the component is not conditionally hidden or unmounted before it can complete seeding. Confirm authentication state is properly passed through context so InitializeData can access isAdmin status."
+        }
+      ]
+    }
+  ]
 }

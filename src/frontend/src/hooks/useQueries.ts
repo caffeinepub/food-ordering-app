@@ -46,7 +46,10 @@ export function useGetFoodItems() {
     queryKey: ['foodItems'],
     queryFn: async () => {
       if (!actor) return [];
-      return actor.getFoodItems();
+      console.log('Fetching food items from backend...');
+      const items = await actor.getAllFoodItems();
+      console.log('Received food items:', items);
+      return items;
     },
     enabled: !!actor && !isFetching,
   });
@@ -72,10 +75,16 @@ export function useAddFoodItem() {
   return useMutation({
     mutationFn: async (foodItem: FoodItem) => {
       if (!actor) throw new Error('Actor not available');
-      return actor.addFoodItem(foodItem);
+      console.log('Adding food item:', foodItem);
+      const id = await actor.addFoodItem(foodItem);
+      console.log('Food item added with ID:', id);
+      return id;
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['foodItems'] });
+    },
+    onError: (error) => {
+      console.error('Error adding food item:', error);
     },
   });
 }

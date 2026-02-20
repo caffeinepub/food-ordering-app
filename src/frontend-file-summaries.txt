@@ -4,14 +4,14 @@
   "frontend/src/components/LoginButton.tsx": "Authentication button component that handles Internet Identity login/logout with user profile name display and loading states.",
   "frontend/src/components/ProfileSetup.tsx": "Modal dialog component that prompts first-time users to enter their name after authentication, preventing modal flash with proper loading state checks.",
   "frontend/src/pages/HomePage.tsx": "Landing page with hero banner, feature highlights, and browsable category cards for all 8 food categories with navigation to filtered product listings.",
-  "frontend/src/pages/ProductsPage.tsx": "Product listing page displaying food items in a responsive grid with category filtering tabs and add-to-cart functionality, updated to filter items by checking if the selected category exists in the item's categories array.",
-  "frontend/src/components/ProductCard.tsx": "Reusable product card component displaying food item details including image, name, description, price in rupees, multiple category badges, preparation time, and add-to-cart button, updated to support the categories array.",
+  "frontend/src/pages/ProductsPage.tsx": "Product listing page displaying food items in a responsive grid with category filtering tabs, add-to-cart functionality, enhanced loading states, error handling with retry button, and proper actor dependency checks.",
+  "frontend/src/components/ProductCard.tsx": "Reusable product card component displaying food item details including image, name, description, price in rupees, multiple category badges, preparation time, and add-to-cart button, now using correct field names (isAvailable, prepTime) from the updated backend interface.",
   "frontend/src/pages/CartPage.tsx": "Shopping cart page showing cart items with quantity controls, remove functionality, order summary, and checkout button.",
   "frontend/src/components/CartItem.tsx": "Cart item component displaying food item thumbnail, name, quantity controls with increment/decrement buttons, price, and remove button.",
   "frontend/src/pages/OrderHistoryPage.tsx": "Order history page displaying user's past orders in reverse chronological order with expandable details.",
   "frontend/src/components/OrderCard.tsx": "Order card component with accordion to show order details including items, quantities, prices, and color-coded status badges.",
-  "frontend/src/hooks/useQueries.ts": "Custom React Query hooks for all backend operations including user profile, food items (with new useAddFoodItem and useIsCallerAdmin hooks), cart management, and order history with proper cache invalidation.",
+  "frontend/src/hooks/useQueries.ts": "Custom React Query hooks for all backend operations including user profile, food items (fixed to call getAllFoodItems), cart management, and order history with proper cache invalidation and debug logging.",
   "frontend/src/index.css": "Global styles with OKLCH color system defining warm, appetizing color palette with orange primary colors and warm neutrals for both light and dark modes.",
   "frontend/tailwind.config.js": "Tailwind configuration extending theme with custom color tokens, Inter font family, and design system utilities.",
-  "frontend/src/components/InitializeData.tsx": "Data initialization component that automatically seeds the five initial food items (Chicken Biryani, Paneer Tikka, Aloo Paratha, Matar Paneer, Matar Paneer Roti) when an admin user logs in, checking for existing items to avoid duplicates."
+  "frontend/src/components/InitializeData.tsx": "Data initialization component that automatically seeds the five initial food items when an admin user logs in, using correct field names (isAvailable, prepTime) and checking for existing items to avoid duplicates with enhanced logging."
 }

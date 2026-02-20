@@ -1,16 +1,17 @@
 import Map "mo:core/Map";
 import List "mo:core/List";
+import Principal "mo:core/Principal";
 import Nat "mo:core/Nat";
 import Float "mo:core/Float";
-import Principal "mo:core/Principal";
 
 module {
+  // Old types (from previous deployment)
   type OldFoodItem = {
     id : Nat;
     name : Text;
     description : Text;
     price : Float;
-    category : { #fastFood; #breakfast; #lunch; #dinner; #snacks; #vegetarian; #nonVegetarian; #healthyFoods };
+    categories : [Category];
     imageUrl : Text;
     available : Bool;
     preparationTime : Nat;
@@ -26,107 +27,107 @@ module {
     user : Principal.Principal;
     items : [OldCartItem];
     totalPrice : Float;
-    status : {
-      #pending;
-      #confirmed;
-      #preparing;
-      #delivered;
-    };
+    status : OrderStatus;
   };
 
   type OldActor = {
+    userProfiles : Map.Map<Principal.Principal, UserProfile>;
     foodItems : Map.Map<Nat, OldFoodItem>;
     cartItems : Map.Map<Principal.Principal, List.List<OldCartItem>>;
     orders : Map.Map<Nat, OldOrderRecord>;
+    nextFoodId : Nat;
+    nextOrderId : Nat;
   };
 
-  type NewFoodItem = {
+  // New types (as defined in main.mo)
+  public type Category = {
+    #fastFood;
+    #breakfast;
+    #lunch;
+    #dinner;
+    #snacks;
+    #vegetarian;
+    #nonVegetarian;
+    #healthyFoods;
+  };
+
+  public type UserProfile = {
+    name : Text;
+  };
+
+  public type FoodItem = {
     id : Nat;
     name : Text;
     description : Text;
     price : Float;
-    categories : [{ #fastFood; #breakfast; #lunch; #dinner; #snacks; #vegetarian; #nonVegetarian; #healthyFoods }];
+    categories : [Category];
     imageUrl : Text;
-    available : Bool;
-    preparationTime : Nat;
+    isAvailable : Bool;
+    prepTime : Nat;
   };
 
-  type NewCartItem = {
-    foodItem : NewFoodItem;
+  public type CartItem = {
+    foodItem : FoodItem;
     quantity : Nat;
   };
 
-  type NewOrderRecord = {
+  public type OrderStatus = {
+    #pending;
+    #confirmed;
+    #preparing;
+    #delivered;
+  };
+
+  public type OrderRecord = {
     id : Nat;
     user : Principal.Principal;
-    items : [NewCartItem];
+    items : [CartItem];
     totalPrice : Float;
-    status : {
-      #pending;
-      #confirmed;
-      #preparing;
-      #delivered;
-    };
+    status : OrderStatus;
   };
 
-  type NewActor = {
-    foodItems : Map.Map<Nat, NewFoodItem>;
-    cartItems : Map.Map<Principal.Principal, List.List<NewCartItem>>;
-    orders : Map.Map<Nat, NewOrderRecord>;
+  public type NewActor = {
+    userProfiles : Map.Map<Principal.Principal, UserProfile>;
+    foodItems : Map.Map<Nat, FoodItem>;
+    cartItems : Map.Map<Principal.Principal, List.List<CartItem>>;
+    orders : Map.Map<Nat, OrderRecord>;
+    nextFoodId : Nat;
+    nextOrderId : Nat;
   };
 
-  // Convert old food item to new food item.
-  func convertFoodItem(oldFoodItem : OldFoodItem) : NewFoodItem {
-    {
-      oldFoodItem with
-      categories = [oldFoodItem.category];
-    };
-  };
-
-  // Convert old cart item to new cart item.
-  func convertCartItem(oldCartItem : OldCartItem) : NewCartItem {
-    {
-      oldCartItem with
-      foodItem = convertFoodItem(oldCartItem.foodItem);
-    };
-  };
-
-  // Convert old order record to new order record.
-  func convertOrderRecord(oldOrderRecord : OldOrderRecord) : NewOrderRecord {
-    {
-      oldOrderRecord with
-      items = oldOrderRecord.items.map(
-        func(oldCartItem) { convertCartItem(oldCartItem) }
-      );
-    };
-  };
-
-  // Convert old cart items to new cart items.
-  func convertCartItems(oldCartItems : Map.Map<Principal.Principal, List.List<OldCartItem>>) : Map.Map<Principal.Principal, List.List<NewCartItem>> {
-    oldCartItems.map<Principal.Principal, List.List<OldCartItem>, List.List<NewCartItem>>(
+  // Migrate CartItems
+  func migrateCartItems(oldCartItems : Map.Map<Principal.Principal, List.List<OldCartItem>>) : Map.Map<Principal.Principal, List.List<CartItem>> {
+    oldCartItems.map(
       func(_principal, oldCartItemList) {
-        oldCartItemList.map<OldCartItem, NewCartItem>(
-          func(oldCartItem) { convertCartItem(oldCartItem) }
+        oldCartItemList.map<OldCartItem, CartItem>(
+          func(oldCartItem) {
+            { oldCartItem with foodItem = migrateFoodItem(oldCartItem.foodItem) };
+          }
         );
       }
     );
   };
 
-  // Convert old orders to new orders.
-  func convertOrders(oldOrders : Map.Map<Nat, OldOrderRecord>) : Map.Map<Nat, NewOrderRecord> {
-    oldOrders.map<Nat, OldOrderRecord, NewOrderRecord>(
-      func(_id, oldOrderRecord) { convertOrderRecord(oldOrderRecord) }
+  // Migrate FoodItem
+  func migrateFoodItem(oldFoodItem : OldFoodItem) : FoodItem {
+    { oldFoodItem with isAvailable = oldFoodItem.available; prepTime = oldFoodItem.preparationTime };
+  };
+
+  // Migrate OrderItems
+  func migrateOrderRecords(oldOrderRecords : Map.Map<Nat, OldOrderRecord>) : Map.Map<Nat, OrderRecord> {
+    oldOrderRecords.map(
+      func(_nat, oldOrderRecord) {
+        { oldOrderRecord with items = oldOrderRecord.items.map(func(oldCartItem) { { oldCartItem with foodItem = migrateFoodItem(oldCartItem.foodItem) } }) };
+      }
     );
   };
 
-  // Migration function called by the main actor via the with-clause.
   public func run(old : OldActor) : NewActor {
     {
-      foodItems = old.foodItems.map<Nat, OldFoodItem, NewFoodItem>(
-        func(_id, oldFoodItem) { convertFoodItem(oldFoodItem) }
-      );
-      cartItems = convertCartItems(old.cartItems);
-      orders = convertOrders(old.orders);
+      old with
+      foodItems = old.foodItems.map<Nat, OldFoodItem, FoodItem>(func(_nat, oldFoodItem) { migrateFoodItem(oldFoodItem) });
+      cartItems = migrateCartItems(old.cartItems);
+      orders = migrateOrderRecords(old.orders);
     };
   };
 };

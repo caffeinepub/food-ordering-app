@@ -7,6 +7,7 @@ import Runtime "mo:core/Runtime";
 import Principal "mo:core/Principal";
 import Float "mo:core/Float";
 import Migration "migration";
+
 import MixinAuthorization "authorization/MixinAuthorization";
 import AccessControl "authorization/access-control";
 import MixinStorage "blob-storage/Mixin";
@@ -20,6 +21,7 @@ actor {
 
   public type UserProfile = {
     name : Text;
+    // Other user metadata if needed
   };
 
   public type Category = {
@@ -40,8 +42,8 @@ actor {
     price : Float;
     categories : [Category];
     imageUrl : Text;
-    available : Bool;
-    preparationTime : Nat; // in minutes
+    isAvailable : Bool; // renamed from available
+    prepTime : Nat; // renamed from preparationTime
   };
 
   public type CartItem = {
@@ -74,7 +76,7 @@ actor {
   // User Profile Functions
   public query ({ caller }) func getCallerUserProfile() : async ?UserProfile {
     if (not (AccessControl.hasPermission(accessControlState, caller, #user))) {
-      Runtime.trap("Unauthorized: Only users can view profiles");
+      Runtime.trap("Unauthorized: Only users can save profiles");
     };
     userProfiles.get(caller);
   };
@@ -105,8 +107,8 @@ actor {
       price = foodItem.price;
       categories = foodItem.categories;
       imageUrl = foodItem.imageUrl;
-      available = foodItem.available;
-      preparationTime = foodItem.preparationTime;
+      isAvailable = foodItem.isAvailable;
+      prepTime = foodItem.prepTime;
     };
     foodItems.add(nextFoodId, newFoodItem);
     nextFoodId += 1;
@@ -135,7 +137,7 @@ actor {
     foodItems.remove(id);
   };
 
-  public query ({ caller }) func getFoodItems() : async [FoodItem] {
+  public query ({ caller }) func getAllFoodItems() : async [FoodItem] {
     foodItems.values().toArray();
   };
 

@@ -2,11 +2,14 @@ import { useState, useMemo } from 'react';
 import { useNavigate, useSearch } from '@tanstack/react-router';
 import { useGetFoodItems, useAddToCart } from '../hooks/useQueries';
 import { useInternetIdentity } from '../hooks/useInternetIdentity';
+import { useActor } from '../hooks/useActor';
 import ProductCard from '../components/ProductCard';
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Loader2 } from 'lucide-react';
+import { Loader2, AlertCircle } from 'lucide-react';
 import { Category } from '../backend';
 import { toast } from 'sonner';
+import { Button } from '@/components/ui/button';
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 
 const categoryLabels: Record<Category, string> = {
   [Category.fastFood]: 'Fast Food',
@@ -23,10 +26,13 @@ export default function ProductsPage() {
   const navigate = useNavigate();
   const search = useSearch({ strict: false }) as { category?: Category };
   const [selectedCategory, setSelectedCategory] = useState<Category | 'all'>(search.category || 'all');
-  const { data: foodItems = [], isLoading } = useGetFoodItems();
+  const { isFetching: actorFetching } = useActor();
+  const { data: foodItems = [], isLoading: queryLoading, error, refetch } = useGetFoodItems();
   const addToCart = useAddToCart();
   const { identity } = useInternetIdentity();
   const isAuthenticated = !!identity;
+
+  const isLoading = actorFetching || queryLoading;
 
   const filteredItems = useMemo(() => {
     if (selectedCategory === 'all') return foodItems;
@@ -77,6 +83,20 @@ export default function ProductsPage() {
         </Tabs>
       </div>
 
+      {/* Error State */}
+      {error && (
+        <Alert variant="destructive" className="mb-8">
+          <AlertCircle className="h-4 w-4" />
+          <AlertTitle>Error loading menu items</AlertTitle>
+          <AlertDescription className="flex items-center justify-between">
+            <span>Failed to load food items. Please try again.</span>
+            <Button variant="outline" size="sm" onClick={() => refetch()}>
+              Retry
+            </Button>
+          </AlertDescription>
+        </Alert>
+      )}
+
       {/* Products Grid */}
       {isLoading ? (
         <div className="flex justify-center items-center py-20">
@@ -84,7 +104,11 @@ export default function ProductsPage() {
         </div>
       ) : filteredItems.length === 0 ? (
         <div className="text-center py-20">
-          <p className="text-xl text-muted-foreground">No items found in this category</p>
+          <p className="text-xl text-muted-foreground">
+            {foodItems.length === 0 
+              ? 'No items available yet. Please check back later.' 
+              : 'No items found in this category'}
+          </p>
         </div>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">

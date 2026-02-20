@@ -18,10 +18,10 @@ export interface FoodItem {
     id: bigint;
     categories: Array<Category>;
     name: string;
+    isAvailable: boolean;
     description: string;
-    preparationTime: bigint;
-    available: boolean;
     imageUrl: string;
+    prepTime: bigint;
     price: number;
 }
 export interface CartItem {
@@ -58,11 +58,11 @@ export interface backendInterface {
     assignCallerUserRole(user: Principal, role: UserRole): Promise<void>;
     calculateCartTotal(): Promise<number>;
     deleteFoodItem(id: bigint): Promise<void>;
+    getAllFoodItems(): Promise<Array<FoodItem>>;
     getAllOrdersByTotalPriceDesc(): Promise<Array<OrderRecord>>;
     getCallerUserProfile(): Promise<UserProfile | null>;
     getCallerUserRole(): Promise<UserRole>;
     getCart(): Promise<Array<CartItem>>;
-    getFoodItems(): Promise<Array<FoodItem>>;
     getFoodItemsByCategory(category: Category): Promise<Array<FoodItem>>;
     getOrderHistory(): Promise<Array<OrderRecord>>;
     getUserProfile(user: Principal): Promise<UserProfile | null>;

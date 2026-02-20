@@ -1,15 +1,16 @@
 {
   "schemaVersion": "1.0.0",
-  "projectStateVersion": 7,
+  "projectStateVersion": 9,
   "summary": "Food ordering app with comprehensive category system (fast food, breakfast, lunch, dinner, snacks, vegetarian, non-vegetarian, healthy foods) and Amazon-style e-commerce features including product listings, shopping cart, user accounts, and order management",
   "architectural_notes": [
     "E-commerce architecture similar to Amazon with product catalog, cart, and checkout flow",
     "Internet Identity integration for user authentication",
     "Multi-category food classification system"
   ],
-  "known_issues": [],
-  "isFixRequest": false,
-  "imageRequirements": "## Required Images\n- Appetizing photo of Chicken Biryani in a traditional serving bowl with garnish (chicken-biryani.dim_400x300.png)\n- Appetizing photo of Paneer Tikka skewers with charred edges and garnish (paneer-tikka.dim_400x300.png)\n- Appetizing photo of Aloo Paratha on a plate with butter and yogurt side (aloo-paratha.dim_400x300.png)\n- Appetizing photo of Matar Paneer curry in a traditional bowl with garnish (matar-paneer.dim_400x300.png)\n- Appetizing photo of Matar Paneer Roti combination plate with curry and roti (matar-paneer-roti.dim_400x300.png)",
+  "known_issues": [
+    "No food items displaying on the frontend despite being added to backend database"
+  ],
+  "isFixRequest": true,
   "existing_features": [
     {
       "id": "feature-create-frontend-home-page-with-category-browsing-section-displaying-all-8-food-categories-fast-food-breakfast-lunch-dinner-snacks-vegetarian-non-vegetarian-healthy-foods-as-clickable-cards-with-representative-imagery",
@@ -64,6 +65,30 @@
       "title": "Render generated category images and food placeholder images as static assets in frontend/public/assets/generated directory",
       "reqIds": [
         "REQ-11"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-debug-and-fix-the-food-items-query-in-the-productspage-component-to-ensure-the-five-seeded-food-items-chicken-biryani-paneer-tikka-aloo-paratha-matar-paneer-matar-paneer-roti-are-retrieved-from-the-backend-and-displayed-in-the-product-grid",
+      "title": "Debug and fix the food items query in the ProductsPage component to ensure the five seeded food items (Chicken Biryani, Paneer Tikka, Aloo Paratha, Matar Paneer, Matar Paneer Roti) are retrieved from the backend and displayed in the product grid",
+      "reqIds": [
+        "REQ-17"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-verify-the-usequeries-hook-s-getallfooditems-query-is-correctly-configured-to-fetch-data-from-the-backend-actor-and-handle-loading-error-states-appropriately",
+      "title": "Verify the useQueries hook's getAllFoodItems query is correctly configured to fetch data from the backend actor and handle loading/error states appropriately",
+      "reqIds": [
+        "REQ-18"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-check-the-initializedata-component-execution-to-confirm-that-all-five-food-items-are-successfully-seeded-on-admin-login-and-verify-no-duplicate-prevention-logic-is-blocking-legitimate-items",
+      "title": "Check the InitializeData component execution to confirm that all five food items are successfully seeded on admin login and verify no duplicate prevention logic is blocking legitimate items",
+      "reqIds": [
+        "REQ-19"
       ],
       "version": 1
     }
@@ -174,6 +199,14 @@
       "summary": "Add Matar Paneer Roti food item to backend database with name 'Matar Paneer Roti', price ₹200, categories 'Dinner', 'Lunch', and 'Vegetarian', placeholder image URL, available status, and appropriate description and preparation time",
       "reqIds": [
         "REQ-16"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-19",
+      "summary": "Verify the backend getAllFoodItems function returns the correct data structure that matches the frontend FoodItem type expectations, including all required fields (id, name, description, price, categories array, imageUrl, isAvailable, prepTime)",
+      "reqIds": [
+        "REQ-20"
       ],
       "status": "pending"
     }

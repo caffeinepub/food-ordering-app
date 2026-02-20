@@ -1,4 +1,68 @@
 {
   "kind": "feature_evidence_report",
-  "features": []
+  "features": [
+    {
+      "featureId": "feature-debug-and-fix-the-food-items-query-in-the-productspage-component-to-ensure-the-five-seeded-food-items-chicken-biryani-paneer-tikka-aloo-paratha-matar-paneer-matar-paneer-roti-are-retrieved-from-the-backend-and-displayed-in-the-product-grid",
+      "featureTitle": "Debug and fix the food items query in the ProductsPage component to ensure the five seeded food items (Chicken Biryani, Paneer Tikka, Aloo Paratha, Matar Paneer, Matar Paneer Roti) are retrieved from the backend and displayed in the product grid",
+      "files": [
+        "frontend/src/hooks/useQueries.ts",
+        "frontend/src/pages/ProductsPage.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0",
+        "blob-storage@4.0.0"
+      ],
+      "testIds": [
+        "REQ-17"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-verify-the-usequeries-hook-s-getallfooditems-query-is-correctly-configured-to-fetch-data-from-the-backend-actor-and-handle-loading-error-states-appropriately",
+      "featureTitle": "Verify the useQueries hook's getAllFoodItems query is correctly configured to fetch data from the backend actor and handle loading/error states appropriately",
+      "files": [
+        "frontend/src/hooks/useQueries.ts",
+        "frontend/src/pages/ProductsPage.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0",
+        "blob-storage@4.0.0"
+      ],
+      "testIds": [
+        "REQ-18"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-check-the-initializedata-component-execution-to-confirm-that-all-five-food-items-are-successfully-seeded-on-admin-login-and-verify-no-duplicate-prevention-logic-is-blocking-legitimate-items",
+      "featureTitle": "Check the InitializeData component execution to confirm that all five food items are successfully seeded on admin login and verify no duplicate prevention logic is blocking legitimate items",
+      "files": [
+        "frontend/src/components/InitializeData.tsx",
+        "frontend/src/hooks/useQueries.ts"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0",
+        "blob-storage@4.0.0"
+      ],
+      "testIds": [
+        "REQ-19"
+      ],
+      "confidence": "high"
+    }
+  ]
 }
