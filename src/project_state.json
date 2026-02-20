@@ -1,0 +1,185 @@
+{
+  "schemaVersion": "1.0.0",
+  "projectStateVersion": 7,
+  "summary": "Food ordering app with comprehensive category system (fast food, breakfast, lunch, dinner, snacks, vegetarian, non-vegetarian, healthy foods) and Amazon-style e-commerce features including product listings, shopping cart, user accounts, and order management",
+  "architectural_notes": [
+    "E-commerce architecture similar to Amazon with product catalog, cart, and checkout flow",
+    "Internet Identity integration for user authentication",
+    "Multi-category food classification system"
+  ],
+  "known_issues": [],
+  "isFixRequest": false,
+  "imageRequirements": "## Required Images\n- Appetizing photo of Chicken Biryani in a traditional serving bowl with garnish (chicken-biryani.dim_400x300.png)\n- Appetizing photo of Paneer Tikka skewers with charred edges and garnish (paneer-tikka.dim_400x300.png)\n- Appetizing photo of Aloo Paratha on a plate with butter and yogurt side (aloo-paratha.dim_400x300.png)\n- Appetizing photo of Matar Paneer curry in a traditional bowl with garnish (matar-paneer.dim_400x300.png)\n- Appetizing photo of Matar Paneer Roti combination plate with curry and roti (matar-paneer-roti.dim_400x300.png)",
+  "existing_features": [
+    {
+      "id": "feature-create-frontend-home-page-with-category-browsing-section-displaying-all-8-food-categories-fast-food-breakfast-lunch-dinner-snacks-vegetarian-non-vegetarian-healthy-foods-as-clickable-cards-with-representative-imagery",
+      "title": "Create frontend home page with category browsing section displaying all 8 food categories (fast food, breakfast, lunch, dinner, snacks, vegetarian, non-vegetarian, healthy foods) as clickable cards with representative imagery",
+      "reqIds": [
+        "REQ-5"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-build-product-listing-page-that-displays-food-items-in-grid-layout-with-item-cards-showing-image-name-price-category-badge-and-add-to-cart-button-with-filtering-by-category",
+      "title": "Build product listing page that displays food items in grid layout with item cards showing image, name, price, category badge, and 'Add to Cart' button, with filtering by category",
+      "reqIds": [
+        "REQ-6"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-shopping-cart-page-showing-cart-items-with-thumbnails-names-quantities-with-increment-decrement-controls-individual-prices-subtotal-and-checkout-button",
+      "title": "Create shopping cart page showing cart items with thumbnails, names, quantities with increment/decrement controls, individual prices, subtotal, and checkout button",
+      "reqIds": [
+        "REQ-7"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-internet-identity-authentication-with-login-logout-functionality-and-user-session-management",
+      "title": "Implement Internet Identity authentication with login/logout functionality and user session management",
+      "reqIds": [
+        "REQ-8"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-order-history-page-displaying-user-s-past-orders-with-order-id-date-items-ordered-total-amount-and-current-status-with-visual-status-indicators",
+      "title": "Create order history page displaying user's past orders with order ID, date, items ordered, total amount, and current status with visual status indicators",
+      "reqIds": [
+        "REQ-9"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-design-and-implement-a-cohesive-visual-theme-with-warm-appetizing-colors-oranges-greens-warm-neutrals-inspired-by-modern-food-delivery-platforms-using-clean-typography-and-inviting-imagery-throughout-the-interface",
+      "title": "Design and implement a cohesive visual theme with warm, appetizing colors (oranges, greens, warm neutrals) inspired by modern food delivery platforms, using clean typography and inviting imagery throughout the interface",
+      "reqIds": [
+        "REQ-10"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-render-generated-category-images-and-food-placeholder-images-as-static-assets-in-frontend-public-assets-generated-directory",
+      "title": "Render generated category images and food placeholder images as static assets in frontend/public/assets/generated directory",
+      "reqIds": [
+        "REQ-11"
+      ],
+      "version": 1
+    }
+  ],
+  "new_feature_requests": [
+    {
+      "id": "AR-1",
+      "summary": "Implement food category system with fast food, breakfast, lunch, dinner, snacks, vegetarian, non-vegetarian, and healthy food categories",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-2",
+      "summary": "Create product listing pages with food items and details",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-3",
+      "summary": "Implement shopping cart functionality",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-4",
+      "summary": "Add user account system with Internet Identity authentication",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-5",
+      "summary": "Create order management system",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-6",
+      "summary": "Create backend data model for food items with fields: id, name, description, price, category (fast food, breakfast, lunch, dinner, snacks, vegetarian, non-vegetarian, healthy foods), imageUrl, availability status, and preparation time",
+      "reqIds": [
+        "REQ-1"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-7",
+      "summary": "Implement backend functions to add, update, delete, and retrieve food items with filtering by category",
+      "reqIds": [
+        "REQ-2"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-8",
+      "summary": "Create shopping cart data structure and backend functions to add items, update quantities, remove items, and calculate total price per user",
+      "reqIds": [
+        "REQ-3"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-9",
+      "summary": "Implement order management system with backend functions to create orders from cart, store order history with status tracking (pending, confirmed, preparing, delivered), and retrieve user order history",
+      "reqIds": [
+        "REQ-4"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-10",
+      "summary": "Add initial food items to database: Chicken Biryani (₹180, Lunch/Non-Vegetarian), Paneer Tikka (₹150, Dinner/Vegetarian), Aloo Paratha (₹80, Breakfast/Vegetarian), Matar Paneer (₹150, Dinner/Vegetarian), Matar Paneer Roti (₹200, Dinner or Lunch/Vegetarian)",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-11",
+      "summary": "Add Chicken Biryani food item to backend database with name 'Chicken Biryani', price ₹180, categories 'Lunch' and 'Non-Vegetarian', placeholder image URL, available status, and appropriate description and preparation time",
+      "reqIds": [
+        "REQ-12"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-12",
+      "summary": "Add Paneer Tikka food item to backend database with name 'Paneer Tikka', price ₹150, categories 'Dinner' and 'Vegetarian', placeholder image URL, available status, and appropriate description and preparation time",
+      "reqIds": [
+        "REQ-13"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-13",
+      "summary": "Add Aloo Paratha food item to backend database with name 'Aloo Paratha', price ₹80, categories 'Breakfast' and 'Vegetarian', placeholder image URL, available status, and appropriate description and preparation time",
+      "reqIds": [
+        "REQ-14"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-14",
+      "summary": "Add Matar Paneer food item to backend database with name 'Matar Paneer', price ₹150, categories 'Dinner' and 'Vegetarian', placeholder image URL, available status, and appropriate description and preparation time",
+      "reqIds": [
+        "REQ-15"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-15",
+      "summary": "Add Matar Paneer Roti food item to backend database with name 'Matar Paneer Roti', price ₹200, categories 'Dinner', 'Lunch', and 'Vegetarian', placeholder image URL, available status, and appropriate description and preparation time",
+      "reqIds": [
+        "REQ-16"
+      ],
+      "status": "pending"
+    }
+  ],
+  "gameProjectType": "none",
+  "projectName": "Food Ordering App",
+  "clarification_mode": "instant",
+  "clarification_rounds": 0
+}

@@ -1,0 +1,133 @@
+{
+  "kind": "build_request",
+  "title": "Add five initial food items to database",
+  "projectName": "Food Ordering App",
+  "priority": "normal",
+  "requirements": [
+    {
+      "id": "REQ-12",
+      "text": "Add Chicken Biryani food item to backend database with name 'Chicken Biryani', price ₹180, categories 'Lunch' and 'Non-Vegetarian', placeholder image URL, available status, and appropriate description and preparation time",
+      "target": "backend",
+      "source": {
+        "messageIds": [
+          "msg-5"
+        ],
+        "quotes": [
+          "Chicken Biryani - ₹180 - Lunch/Non-Vegetarian"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Food item exists in backend with exact name 'Chicken Biryani'",
+        "Price is set to 180 (in rupees)",
+        "Item is tagged with both 'Lunch' and 'Non-Vegetarian' categories",
+        "Item has a valid imageUrl",
+        "Item is marked as available",
+        "Item has appropriate description and preparation time"
+      ]
+    },
+    {
+      "id": "REQ-13",
+      "text": "Add Paneer Tikka food item to backend database with name 'Paneer Tikka', price ₹150, categories 'Dinner' and 'Vegetarian', placeholder image URL, available status, and appropriate description and preparation time",
+      "target": "backend",
+      "source": {
+        "messageIds": [
+          "msg-5"
+        ],
+        "quotes": [
+          "Paneer Tikka - ₹150 - Dinner/Vegetarian"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Food item exists in backend with exact name 'Paneer Tikka'",
+        "Price is set to 150 (in rupees)",
+        "Item is tagged with both 'Dinner' and 'Vegetarian' categories",
+        "Item has a valid imageUrl",
+        "Item is marked as available",
+        "Item has appropriate description and preparation time"
+      ]
+    },
+    {
+      "id": "REQ-14",
+      "text": "Add Aloo Paratha food item to backend database with name 'Aloo Paratha', price ₹80, categories 'Breakfast' and 'Vegetarian', placeholder image URL, available status, and appropriate description and preparation time",
+      "target": "backend",
+      "source": {
+        "messageIds": [
+          "msg-5"
+        ],
+        "quotes": [
+          "Aloo Paratha - ₹80 - Breakfast/Vegetarian"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Food item exists in backend with exact name 'Aloo Paratha'",
+        "Price is set to 80 (in rupees)",
+        "Item is tagged with both 'Breakfast' and 'Vegetarian' categories",
+        "Item has a valid imageUrl",
+        "Item is marked as available",
+        "Item has appropriate description and preparation time"
+      ]
+    },
+    {
+      "id": "REQ-15",
+      "text": "Add Matar Paneer food item to backend database with name 'Matar Paneer', price ₹150, categories 'Dinner' and 'Vegetarian', placeholder image URL, available status, and appropriate description and preparation time",
+      "target": "backend",
+      "source": {
+        "messageIds": [
+          "msg-5"
+        ],
+        "quotes": [
+          "Matar Paneer - ₹150 - Dinner/Vegetarian"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Food item exists in backend with exact name 'Matar Paneer'",
+        "Price is set to 150 (in rupees)",
+        "Item is tagged with both 'Dinner' and 'Vegetarian' categories",
+        "Item has a valid imageUrl",
+        "Item is marked as available",
+        "Item has appropriate description and preparation time"
+      ]
+    },
+    {
+      "id": "REQ-16",
+      "text": "Add Matar Paneer Roti food item to backend database with name 'Matar Paneer Roti', price ₹200, categories 'Dinner', 'Lunch', and 'Vegetarian', placeholder image URL, available status, and appropriate description and preparation time",
+      "target": "backend",
+      "source": {
+        "messageIds": [
+          "msg-5"
+        ],
+        "quotes": [
+          "Matar Paneer Roti - ₹200 - Dinner or Lunch/Vegetarian"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Food item exists in backend with exact name 'Matar Paneer Roti'",
+        "Price is set to 200 (in rupees)",
+        "Item is tagged with 'Dinner', 'Lunch', and 'Vegetarian' categories",
+        "Item has a valid imageUrl",
+        "Item is marked as available",
+        "Item has appropriate description and preparation time"
+      ]
+    }
+  ],
+  "constraints": [
+    "Maintain existing backend schema for food items",
+    "Use placeholder image URLs consistent with existing patterns in the codebase",
+    "Preserve all existing food items in the database"
+  ],
+  "nonGoals": [
+    "Modifying frontend UI or components",
+    "Changing authentication or cart functionality",
+    "Adding new categories beyond those already defined"
+  ],
+  "imageRequirements": {
+    "required": [
+      "Appetizing photo of Chicken Biryani in a traditional serving bowl with garnish (chicken-biryani.dim_400x300.png)",
+      "Appetizing photo of Paneer Tikka skewers with charred edges and garnish (paneer-tikka.dim_400x300.png)",
+      "Appetizing photo of Aloo Paratha on a plate with butter and yogurt side (aloo-paratha.dim_400x300.png)",
+      "Appetizing photo of Matar Paneer curry in a traditional bowl with garnish (matar-paneer.dim_400x300.png)",
+      "Appetizing photo of Matar Paneer Roti combination plate with curry and roti (matar-paneer-roti.dim_400x300.png)"
+    ],
+    "edits": []
+  }
+}
